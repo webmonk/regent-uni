@@ -37,6 +37,26 @@
                     }
                 }
             },
+            index_no: {
+                validators: {
+                    stringLength: {
+                        min: 2,
+                    },
+                    notEmpty: {
+                        message: 'Please supply your Index number'
+                    }
+                }
+            },
+            programme: {
+                stringLength: {
+                        min: 2,
+                    },
+                validators: {
+                    notEmpty: {
+                        message: 'Please select your programme'
+                    }
+                }
+            },
             phone: {
                 validators: {
                     notEmpty: {

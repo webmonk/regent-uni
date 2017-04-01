@@ -23,6 +23,8 @@ gender VARCHAR(30) NOT NULL,
 level integer(10) NOT NULL,
 it_start VARCHAR(30) NOT NULL,
 it_end VARCHAR(30) NOT NULL,
+programme VARCHAR(70) NOT NULL,
+index_no VARCHAR(30) NOT NULL,
 reg_date TIMESTAMP
 )";
 
@@ -56,8 +58,8 @@ $conn->close();
   <script src="js/jquery-ui.min.js"></script>
   <script>
   $( function() {
-    $( "#startdate" ).datepicker({ minDate: +1, maxDate: "+3M +10D" });
-    $( "#enddate" ).datepicker({ minDate: +90, maxDate: "+6M +10D" });
+    $( "#startdate" ).datepicker({ minDate: +1, maxDate: "+1M +10D" }).attr('readonly', 'readonly');
+    $( "#enddate" ).datepicker({ minDate: +30, maxDate: "+6M +10D" }).attr('readonly', 'readonly');
   } );
   </script>
 
@@ -80,9 +82,10 @@ $conn->close();
 <!-- Form Name -->
 <legend>Industrial Internship Application Form</legend>
 
-<!-- Text input-->
+<a href='it_form.doc'>Click here to download the INTERNSHIP EVALUATION FORM</a>
 
 <div class="form-group">
+
   <?php
     if(isset($_POST['submit']))
     {
@@ -94,6 +97,8 @@ $conn->close();
       $level = $_POST['level'];
       $startdate = $_POST['startdate'];
       $enddate = $_POST['enddate'];
+      $programme = $_POST['programme'];
+      $index_no = $_POST['index_no'];
       $reg_date = date('d/m/Y');
 
       $conn = new mysqli($servername, $username, $password, $dbname);
@@ -103,13 +108,13 @@ $conn->close();
         die("Connection failed: " . $conn->connect_error);
       }
 
-$sql = "INSERT INTO students (firstname, lastname, email, phone, gender, level, it_start, it_end)
+$sql = "INSERT INTO students (firstname, lastname, email, phone, gender, level, it_start, it_end, programme, index_no)
 VALUES ('$firstname',
  '$lastname',
   '$email', 
   '$phone', 
   '$gender', 
-  '$level', '$startdate', '$enddate')";
+  '$level', '$startdate', '$enddate', '$programme', '$index_no')";
 
 if ($conn->query($sql) === TRUE) {
     echo "Hi ".$firstname. ", your IT letter has been created successfully and a copy has been emailed to you.";
@@ -167,6 +172,50 @@ $conn->close();
   <input name="email" placeholder="E-Mail Address" class="form-control"  type="text">
     </div>
   </div>
+</div>
+
+<!-- Text input-->
+       <div class="form-group">
+  <label class="col-md-4 control-label">Index Number</label>  
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+  <input name="index_no" placeholder="Index Number" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+
+<!-- Select Basic -->
+   
+<div class="form-group"> 
+  <label class="col-md-4 control-label">Programme</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+    <select name="programme" class="form-control selectpicker" >
+      <option value="">Please select your programme</option>
+      <optgroup label="--Engineering">
+      <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+      <option value="Telecoms Engineering">Telecoms Engineering</option>
+      <option value="Computer Engineering">Computer Engineering</option>
+      <optgroup label="--Informatics">
+      <option value="Computer Science">Computer Science</option>
+      <option value="Information System Sciences">Information System Sciences</option>
+      <option value="Instructional Technology">Instructional Technology</option>
+      <optgroup label="--Accounting and Finance">
+      <option value="Accounting And Information Systems">Accounting And Information Systems</option>
+      <option value="Banking and Finance">Banking and Finance</option>
+      <option value="Economics with Computing">Economics with Computing</option>
+      <option value="Business Administration (BBA) e-Commerce option">Business Administration (BBA) e-Commerce option</option>
+      <optgroup label="--Management Studies">
+      <option value="Management with Computing">Management with Computing</option>
+      <optgroup label="--Theology and Ministry">
+      <option value="Theology with Management">Theology with Management</option>
+      <optgroup label="--Psychology and Human Development">
+      <option value="Human Development and Psychology">Human Development and Psychology</option>
+    </select>
+  </div>
+</div>
 </div>
 
 
